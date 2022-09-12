@@ -6,14 +6,14 @@ import { motion } from 'framer-motion'
 import Logo from '../img/logo.png';
 import Avatar from '../img/avatar.png';
 import { Link } from 'react-router-dom';
-import { cart } from '../helpers/localstorageCart';
+import { useRestaurantStore } from '../hooks/useRestaurantStore';
 
 export const Header = ({ setToggle }) => {
 
     const [activeMenu, setActiveMenu] = useState(false);
     // const [cartItems, setCartItems] = useState([]);
 
-    const { cartItems } = cart();
+    const {cart} = useRestaurantStore();
 
     const onLogout = () => {
         setActiveMenu(false);
@@ -22,13 +22,6 @@ export const Header = ({ setToggle }) => {
         // dispatch
         // Navigate
     }
-
-    // useEffect(() => {
-    //     const items = JSON.parse(localStorage.getItem('ACTIVE_CART'));
-    //     if(items){
-    //         setCartItems(items);
-    //     }
-    // },[])
 
   return (
     <header className='fixed bg-primary z-50 w-screen p-3 px-4 md:p-6 md:px-16'>
@@ -59,7 +52,7 @@ export const Header = ({ setToggle }) => {
                         className='text-textColor text-2xl cursor-pointer' 
                     />
                     <div className='absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center'>
-                        <p className='text-xs text-white font-semibold'>{cartItems.length}</p>
+                        <p className='text-xs text-white font-semibold'>{cart.length}</p>
                     </div>
                 </div>
 
@@ -101,7 +94,7 @@ export const Header = ({ setToggle }) => {
 
                 <MdShoppingBasket className='text-textColor text-2xl cursor-pointer'/>
                 <div className='absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center'>
-                    <p className='text-xs text-white font-semibold'>{cartItems.length}</p>
+                    <p className='text-xs text-white font-semibold'>{cart.length}</p>
                 </div>
             </div>
 

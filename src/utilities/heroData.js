@@ -110,15 +110,7 @@ export const carouselData = [
         calories: '25',
         category: 'fruits',
         imgSrc: C2
-    },{
-        id: 8,
-        name: 'Fish Kebab',
-        decp: 'Mixed Fish Plate',
-        price: 5.25,
-        calories: '25',
-        category: 'fruits',
-        imgSrc: Fi2
-    },
+    }
 ]
 
 export const filterData = [
@@ -139,7 +131,8 @@ export const filterData = [
         calories: '25',
         category: 'fruits',
         imgSrc: F1
-    },{
+    },
+    {
         id: 3,
         name: 'Ckicken Kebab',
         decp: 'Mixed Kebab Plate',
@@ -147,7 +140,8 @@ export const filterData = [
         calories: '25',
         category: 'chicken',
         imgSrc: C3
-    },{
+    },
+    {
         id: 4,
         name: 'Fish Kebab',
         decp: 'Mixed Fish Plate',
@@ -173,7 +167,8 @@ export const filterData = [
         calories: '25',
         category: 'fruits',
         imgSrc: F2
-    },{
+    },
+    {
         id: 7,
         name: 'Ckicken Kebab',
         decp: 'Mixed Kebab Plate',
@@ -181,7 +176,8 @@ export const filterData = [
         calories: '25',
         category: 'chicken',
         imgSrc: C2
-    },{
+    },
+    {
         id: 8,
         name: 'Fish Kebab',
         decp: 'Mixed Fish Plate',
@@ -207,7 +203,8 @@ export const filterData = [
         calories: '25',
         category: 'fruits',
         imgSrc: F3
-    },{
+    },
+    {
         id: 11,
         name: 'Ckicken Kebab',
         decp: 'Mixed Kebab Plate',
@@ -215,7 +212,8 @@ export const filterData = [
         calories: '25',
         category: 'chicken',
         imgSrc: C1
-    },{
+    },
+    {
         id: 12,
         name: 'Fish Kebab',
         decp: 'Mixed Fish Plate',

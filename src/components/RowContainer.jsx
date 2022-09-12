@@ -1,19 +1,18 @@
 import { MdShoppingBasket } from 'react-icons/md';
 import { motion } from 'framer-motion'
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { cart } from '../helpers/localstorageCart';
 
 import NotFound from '../img/NotFound.svg'
+import { useRestaurantStore } from '../hooks/useRestaurantStore';
 
-export const RowContainer = ({ flag, data = [], scrollValue, filter = 'fruits' }) => {
-
-    const food = data.filter( fruit => fruit.category === filter);
+export const RowContainer = ({ flag, data = [], scrollValue }) => {
 
     const rowContainer = useRef();
 
-    // const [cartItems, setCartItems] = useState([]);
+    const { startAddingToCart } = useRestaurantStore();
 
     const { crateCart } = cart();
 
@@ -25,6 +24,7 @@ export const RowContainer = ({ flag, data = [], scrollValue, filter = 'fruits' }
     const onAddCart = (itemInfo = {}) => {
         
         crateCart(itemInfo);
+        startAddingToCart({...itemInfo, count: 1 });
         
     }
 
@@ -37,9 +37,9 @@ export const RowContainer = ({ flag, data = [], scrollValue, filter = 'fruits' }
                 : 'overflow-x-hidden flex-wrap'}`
             }
     >
-        {food.length > 0 
+        {data.length > 0 
             // ---- If there is something in the array ----
-            ? food.map( item => (
+            ? data.map( item => (
             <div key={item.id} className='w-275 h-[195px] min-w-[275px] md:w-300 md:min-w-[300px] flex flex-col items-center justify-between my-12 px-4 py-10 rounded-lg shadow-md hover:bg-cardOverlay backdrop-blur-lg'>
                 <div className='w-full flex items-center justify-between'>
                     <motion.div
@@ -61,7 +61,7 @@ export const RowContainer = ({ flag, data = [], scrollValue, filter = 'fruits' }
                 </div>
                 <div className='w-full flex flex-col items-end justify-end'>
                     <p className='text-textColor font-semibold text-base md:text-lg'>
-                        Food name
+                        { item.name }
                     </p>
                     <p className='text-sm text-gray-500'>
                         45 calories

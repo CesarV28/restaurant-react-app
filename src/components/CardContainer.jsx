@@ -4,36 +4,30 @@ import { RiRefreshFill } from 'react-icons/ri';
 import { BiMinus, BiPlus } from 'react-icons/bi';
 import { motion } from 'framer-motion';
 
-import I5 from '../img/i5.png';
+import { useRestaurantStore } from '../hooks/useRestaurantStore';
 
-import { cart } from '../helpers/localstorageCart';
-import { useCounterCartList } from '../hooks/useCounterCartList';
+import EmptyCart from '../img/emptyCart.svg';
 
 export const CardContainer = ({ setToggle }) => {
 
+    const { 
+        cart, 
+        startCleaningCart, 
+        startDecrementAmountProduct, 
+        startIncrementAmountProduct 
+    } = useRestaurantStore();
+   
+    const subTotal = cart.map( item => item.price * item.count )
+                         .reduce( (total, totalPrice) => total + totalPrice, 0);
 
-    const { clearCart, countCart } = cart();
+    const onDecrement = ( product ) => {
+        startDecrementAmountProduct(product);
+    }
 
-    const cartList = countCart();
-    const subTotal = cartList.map( item => item.price * item.count )
-                             .reduce( (total, totalPrice) => total + totalPrice, 0);
+    const onIncrement = ( product ) => {
+        startIncrementAmountProduct(product);
+    }
 
-
-    // const [cartItems, setCartItems] = useState([])
-
-    // useEffect(() => {
-    //     const items = JSON.parse(localStorage.getItem('ACTIVE_CART'));
-  
-    //     if(items){
-    //         setCartItems(items);
-    //     }
-    // }, []);
-
-    // const clearCart = () => {
-    //     setCartItems([]);
-    //     localStorage.clear();
-    // }
-    
   return (
     <motion.div 
         initial={{ opacity: 0, x: 200}}
@@ -50,21 +44,33 @@ export const CardContainer = ({ setToggle }) => {
             {/* Clear button */}
             <motion.p 
                 whileTap={{ scale: 0.75 }} 
-                onClick={ clearCart }
+                onClick={ startCleaningCart }
                 className='flex items-center gap-2 p-1 px-2 my-2 bg-gray-100 rounded-md hover:shadow-md cursor-pointer text-textColor'>
                 Clear 
                 <RiRefreshFill/> 
             </motion.p>
         </div>  
 
+        <div className={`${cart.length !== 0 ? 'hidden' :'flex'} w-full h-full pt-10 px-4  items-center flex-col`}>
+            <p className='text-xl text-textColor font-semibold py-4 text-center'>
+                Your cart is empty, add something delicios!
+            </p>
+            <img 
+                src={EmptyCart} 
+                alt="Empty cart" 
+                className='object-cover'
+            />    
+        </div>
         {/* Button section */}
-        <div className='w-full h-full bg-cartBg rounded-t-[2rem] flex flex-col'>
+        <div className={` ${cart.length === 0 ? 'hidden' :'flex'} flex-col w-full h-full bg-cartBg rounded-t-[2rem] `}>
             <div className='w-full md:40 h-340 px-6 py-10 flex flex-col gap-3 overflow-y-scroll'>
                 {/* Cart item */}
-                {cartList.length > 0 && cartList.map( (item) => (
-                    <div key={item.id} className='w-full p-1 px-2 rounded-lg bg-cartItem flex items-center gap-2'>
+                {cart.length > 0 && cart.map( (item) => (
+                    <div key={item.id} 
+                        className={` ${ item.count === 0 && 'opacity-70'} w-full p-1 px-2 rounded-lg bg-cartItem flex items-center gap-2`}
+                    >
                         <img 
-                            src={I5} 
+                            src={item.imgSrc} 
                             alt="Cart Img" 
                             className='w-20 h-20 max-w-[60px] rounded-full object-contain'
                         />
@@ -79,15 +85,19 @@ export const CardContainer = ({ setToggle }) => {
                         </div>
                         {/* Button section */}
                         <div className='group flex items-center gap-2 ml-auto cursor-pointer'>
-                            <motion.div whileTap={{ scale: 0.75}}>
-                                <BiMinus 
-                                    className='text-gray-50'
-                                />
+                            <motion.div 
+                                onClick={() => onDecrement(item)}
+                                whileTap={{ scale: 0.75}}
+                            >
+                                <BiMinus className='text-gray-50'/>
                             </motion.div>
                             <p className='w-5 h-5 rounded-sm bg-cartBg text-gray-50 flex items-center justify-center'>
                                 {item.count}
                             </p>
-                            <motion.div whileTap={{ scale: 0.75}}>
+                            <motion.div 
+                                onClick={() => onIncrement(item)}
+                                whileTap={{ scale: 0.75}}
+                            >
                                 <BiPlus 
                                     className='text-gray-50'
                                 />

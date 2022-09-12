@@ -77,15 +77,18 @@ export const CreateContainer = () => {
           </motion.p>
 
           {/* ============= Input title ============= */}
-          <div className='w-full py-2 border-b border-gray-300 flex items-center gap-2'>
+          <div 
+            className='w-full py-2 border-b border-gray-300 flex items-center gap-2'
+          >
               <MdFastfood className='text-x1 text-gray-700'/>
               <input 
-                type="text" 
+                type="text"
+                autoComplete='off'
                 required 
                 value={title} 
                 name='title'
                 onChange={ onInputChange }
-                placeholder='Gime a title'
+                placeholder='Give me a title'
                 className='w-full h-full text-lg pl-2 bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor'
               />
           </div>

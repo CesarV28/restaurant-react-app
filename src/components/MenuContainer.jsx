@@ -6,18 +6,21 @@ import { motion } from 'framer-motion';
 import { foodCategories } from '../utilities/foodData';
 import { RowContainer } from './RowContainer';
 
-import { filterData } from '../utilities/heroData';
+import { useRestaurantStore } from '../hooks/useRestaurantStore';
+
 
 export const MenuContainer = () => {
 
     const [foodFilter, setFoodFilter] = useState('chicken');
+    const { filterProduct, startFilterProduct } = useRestaurantStore();
 
-    // useEffect(() => {
-      
-    // }, [foodFilter])
+    useEffect(() => {
+        startFilterProduct(foodFilter)
+    }, [])
     
     const onCategoryClick = (category) => {
         setFoodFilter(category);
+        startFilterProduct(category);
     }
 
   return (
@@ -49,8 +52,7 @@ export const MenuContainer = () => {
             <div className='w-full'>
                 <RowContainer 
                     flag={false} 
-                    data={filterData}
-                    filter={foodFilter}
+                    data={filterProduct}
                 />
             </div>
 

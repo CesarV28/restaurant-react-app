@@ -11,8 +11,7 @@ import { useRestaurantStore } from '../hooks/useRestaurantStore';
 export const Header = ({ setToggle }) => {
 
     const [activeMenu, setActiveMenu] = useState(false);
-    // const [cartItems, setCartItems] = useState([]);
-
+    
     const {cart} = useRestaurantStore();
 
     const onLogout = () => {
